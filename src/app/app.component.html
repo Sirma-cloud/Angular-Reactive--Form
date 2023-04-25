@@ -24,11 +24,10 @@
     <label for="email">Email</label>
     <input type="email" id="myemail" formControlName="email" placeholder="Your email..."/>
 
-    <!-- <div>
-      <small *ngIf="myemail.invalid && myemail.touched"
-        >Email is a required field</small
-      >
-    </div> -->
+    <div>
+      <span style="color: red"
+      *ngIf="!reactiveForm.get('email').valid"> The Email you entered is not Valid</span>
+    </div>
 
     <label for="country">Country</label>
     <select id="country" formControlName="country">

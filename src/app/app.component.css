@@ -29,3 +29,7 @@ input[type=submit]:hover {
     width: 420px;
     margin: 10px auto;
 }
+
+input.ng-invalid.ng-touched{
+    border: red 1px solid;
+}

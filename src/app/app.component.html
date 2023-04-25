@@ -1,31 +1,27 @@
+<!-- The div tag with the class 'form' contains the registration form. -->
 <div class="form" >
-  <h2 id="registration">Registartion Form</h2>
-  <form [formGroup]="reactiveForm"(ngSubmit)="onSubmit()" >
-
+  <!-- The h2 tag with the id 'registration' displays the title of the form. -->
+  <h2 id="registration">Registration Form</h2>
+  
+  <!-- The form tag contains the entire registration form. -->
+  <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()" >
+  
+    <!-- The div tag with the formGroupName 'personalData' groups the personal data fields. -->
     <div formGroupName="personalData">
+    
+      <!-- The label tag and input tag with id 'fname' and formControlName 'firstname' capture the user's first name. -->
       <label for="fname">First Name</label>
       <input type="text" id="fname" formControlName="firstname" placeholder="Your name..."/>
 
-      <!-- <div>
-        <small *ngIf="fname.invalid && fname.touched"
-          >First Name is a required field</small
-        >
-        <span *ngIf="firstname">You entered {{ firstname }}</span>
-      </div> -->
-
+      <!-- The label tag and input tag with id 'lname' and formControlName 'lastname' capture the user's last name. -->
       <label for="lname">Last Name</label>
       <input type="text" id="lname" formControlName="lastname" placeholder="Your last name..."/>
 
-      <!-- <div>
-        <small *ngIf="lname.invalid && lname.touched"
-          >Last Name is a required field</small
-        >
-        <span *ngIf="lastname">You entered {{ lastname }}</span>
-      </div> -->
-
+      <!-- The label tag and input tag with id 'myemail' and formControlName 'email' capture the user's email address. -->
       <label for="email">Email</label>
       <input type="email" id="myemail" formControlName="email" placeholder="Your email..."/>
 
+      <!-- The div tag with error messages for the email field. -->
       <div>
         <span style="color: red"
         *ngIf="!reactiveForm.get('personalData.email').valid && reactiveForm.get('personalData.email').touched"> 
@@ -33,6 +29,7 @@
       </div>
     </div>
 
+    <!-- The label tag and select tag with id 'country' and formControlName 'country' capture the user's country of residence. -->
     <label for="country">Country</label>
     <select id="country" formControlName="country">
       <option value="Kenya" selected >Kenya</option>
@@ -41,15 +38,17 @@
       <option value="Canada">Canada</option>
     </select>
 
+    <!-- The label tag and radio buttons with values 'male', 'female', and 'other' and formControlName 'gender' capture the user's gender. -->
     <label for="gender">Gender</label>
     <input type="radio" id="male" value="male" formControlName="gender" />
     <label for="male">Male</label>
     <input type="radio" id="female" value="female" formControlName="gender"  />
     <label for="female">Female</label>
-    <input type="radio" id="Other" value="other" formControlName="gender"  />
+    <input type="radio" id="Other" formControlName="gender"  />
     <label for="other" >Do Not Specify</label>
     <br/><br />
 
+    <!-- This section creates checkboxes for hobby selection with the formControlName of hobbies. -->
     <label>Hobbies <i>(optional)</i></label>
     <div class="form-inline">
       <label>
@@ -58,6 +57,22 @@
         <input type="checkbox" value="movies" formControlName="hobbies"/>Movies</label>
       <label>
         <input type="checkbox" value="music" formControlName="hobbies"/>Music</label>
+    </div>
+
+    <!-- This section of the code defines a form array for the user to input their skills -->
+    <!-- Angular's formArrayName directive to bind to the corresponding form group control in the reactive form. -->
+    <div formArrayName="skills">
+        <!-- The ng-container element is used with the
+       *ngFor directive to iterate over each skill control in the form array,
+       allowing the user to input multiple skills. -->
+      <ng-container *ngFor="let skill of reactiveForm.get('skills')['controls'];index as i">
+        <!-- Each skill input field uses the 
+        formControlName directive to bind to a specific control in the form array, 
+        identified by its index. -->
+          <input type="text" placeholder="add skill..." formControlName="{{i}}">
+          <button class="btn1" (click)="deleteSkill(i)">- Delete Skill</button>
+      </ng-container>
+      <button (click)="addSkills()">+ Add Skills</button>
     </div>
     <input type="submit" value="Submit" id="btn"/>
   </form>
